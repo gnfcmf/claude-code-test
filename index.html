@@ -38,31 +38,28 @@
             max-width: 700px;
             height: 80vh;
             max-height: 600px;
-            background: rgba(0, 0, 0, 0.85);
-            border: 2px solid transparent;
+            background: #000;
             border-radius: 5px;
             display: flex;
             flex-direction: column;
             z-index: 10;
-            background-clip: padding-box;
-            box-shadow: 0 0 20px rgba(255, 136, 0, 0.3),
-                        0 0 20px rgba(0, 170, 255, 0.3),
-                        0 0 20px rgba(0, 255, 136, 0.3),
-                        inset 0 0 20px rgba(170, 0, 255, 0.1);
+            padding: 2px;
+            background: linear-gradient(45deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff, #ff8800);
+            background-size: 400% 400%;
+            animation: borderGlow 3s linear infinite;
+            box-shadow: 0 0 30px rgba(255, 136, 0, 0.4),
+                        0 0 30px rgba(0, 170, 255, 0.4),
+                        0 0 30px rgba(0, 255, 136, 0.4);
         }
 
-        .chat-container::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff, #ff8800);
-            border-radius: 6px;
-            z-index: -1;
-            animation: borderGlow 3s linear infinite;
-            background-size: 400% 400%;
+        .chat-inner {
+            background: #000;
+            border-radius: 4px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
         }
 
         @keyframes borderGlow {
@@ -72,7 +69,7 @@
         }
 
         /* CRT Scanline Overlay */
-        .chat-container::before {
+        .chat-inner::before {
             content: '';
             position: absolute;
             top: 0;
@@ -88,7 +85,7 @@
             );
             pointer-events: none;
             z-index: 100;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
         /* Header */
@@ -243,20 +240,22 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div class="chat-container">
-        <div class="chat-header">
-            <span>MATRIX TERMINAL v1.0</span> | <span>STATUS: CONNECTED</span>
-        </div>
-
-        <div class="messages" id="messages">
-            <div class="welcome">
-                <h2>WELCOME TO THE MATRIX</h2>
-                <p>Type your message and press Enter to communicate</p>
+        <div class="chat-inner">
+            <div class="chat-header">
+                <span>MATRIX TERMINAL v1.0</span> | <span>STATUS: CONNECTED</span>
             </div>
-        </div>
 
-        <div class="input-area">
-            <span class="input-prompt">&gt;</span>
-            <input type="text" class="input-field" id="input-field" placeholder="Enter message..." autocomplete="off">
+            <div class="messages" id="messages">
+                <div class="welcome">
+                    <h2>WELCOME TO THE MATRIX</h2>
+                    <p>Type your message and press Enter to communicate</p>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <span class="input-prompt">&gt;</span>
+                <input type="text" class="input-field" id="input-field" placeholder="Enter message..." autocomplete="off">
+            </div>
         </div>
     </div>
 
