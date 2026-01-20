@@ -39,13 +39,36 @@
             height: 80vh;
             max-height: 600px;
             background: rgba(0, 0, 0, 0.85);
-            border: 1px solid #ff8800;
+            border: 2px solid transparent;
             border-radius: 5px;
             display: flex;
             flex-direction: column;
             z-index: 10;
+            background-clip: padding-box;
             box-shadow: 0 0 20px rgba(255, 136, 0, 0.3),
-                        inset 0 0 20px rgba(255, 136, 0, 0.1);
+                        0 0 20px rgba(0, 170, 255, 0.3),
+                        0 0 20px rgba(0, 255, 136, 0.3),
+                        inset 0 0 20px rgba(170, 0, 255, 0.1);
+        }
+
+        .chat-container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff, #ff8800);
+            border-radius: 6px;
+            z-index: -1;
+            animation: borderGlow 3s linear infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* CRT Scanline Overlay */
@@ -71,10 +94,14 @@
         /* Header */
         .chat-header {
             padding: 15px 20px;
-            border-bottom: 1px solid #ff8800;
-            color: #ff8800;
-            text-shadow: 0 0 10px #ff8800;
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff) 1;
+            background: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-size: 14px;
+            filter: drop-shadow(0 0 10px rgba(255, 136, 0, 0.5));
         }
 
         .chat-header span {
@@ -96,23 +123,22 @@
         }
 
         .messages::-webkit-scrollbar-track {
-            background: rgba(255, 136, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .messages::-webkit-scrollbar-thumb {
-            background: #ff8800;
+            background: linear-gradient(180deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
             border-radius: 4px;
         }
 
         .message {
-            color: #ff8800;
-            text-shadow: 0 0 5px #ff8800;
             line-height: 1.5;
             font-size: 14px;
         }
 
         .message.user {
-            color: #ff8800;
+            color: #00ff88;
+            text-shadow: 0 0 5px #00ff88;
         }
 
         .message.user::before {
@@ -121,9 +147,10 @@
         }
 
         .message.bot {
-            color: #cc6600;
+            color: #00aaff;
+            text-shadow: 0 0 5px #00aaff;
             padding-left: 20px;
-            border-left: 2px solid rgba(255, 136, 0, 0.3);
+            border-left: 2px solid #aa00ff;
         }
 
         .message.bot::before {
@@ -141,10 +168,11 @@
             display: inline-block;
             width: 8px;
             height: 14px;
-            background: #ff8800;
-            animation: blink 0.7s infinite;
+            background: linear-gradient(180deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
+            animation: blink 0.7s infinite, colorShift 2s linear infinite;
             vertical-align: middle;
             margin-left: 2px;
+            background-size: 100% 500%;
         }
 
         @keyframes blink {
@@ -152,18 +180,24 @@
             51%, 100% { opacity: 0; }
         }
 
+        @keyframes colorShift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+
         /* Input Area */
         .input-area {
             padding: 15px 20px;
-            border-top: 1px solid #ff8800;
+            border-top: 2px solid transparent;
+            border-image: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff) 1;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .input-prompt {
-            color: #ff8800;
-            text-shadow: 0 0 10px #ff8800;
+            color: #ff3333;
+            text-shadow: 0 0 10px #ff3333;
             font-size: 16px;
         }
 
@@ -172,23 +206,26 @@
             background: transparent;
             border: none;
             outline: none;
-            color: #ff8800;
+            color: #00ff88;
             font-family: 'Courier New', monospace;
             font-size: 14px;
-            text-shadow: 0 0 5px #ff8800;
-            caret-color: #ff8800;
+            text-shadow: 0 0 5px #00ff88;
+            caret-color: #00ff88;
         }
 
         .input-field::placeholder {
-            color: rgba(255, 136, 0, 0.3);
+            color: rgba(0, 255, 136, 0.3);
         }
 
         /* Welcome Message */
         .welcome {
             text-align: center;
             padding: 20px;
-            color: #ff8800;
-            text-shadow: 0 0 10px #ff8800;
+            background: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(170, 0, 255, 0.5));
         }
 
         .welcome h2 {
@@ -251,10 +288,13 @@
         const fontSize = 14;
         const columns = Math.floor(canvas.width / fontSize);
         const drops = [];
+        const colors = ['#ff8800', '#00aaff', '#00ff88', '#ff3333', '#aa00ff'];
+        const columnColors = [];
 
-        // Initialize drops
+        // Initialize drops and colors
         for (let i = 0; i < columns; i++) {
             drops[i] = Math.random() * -100;
+            columnColors[i] = colors[Math.floor(Math.random() * colors.length)];
         }
 
         function drawMatrix() {
@@ -262,7 +302,6 @@
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#ff8800';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
@@ -270,11 +309,13 @@
                 const x = i * fontSize;
                 const y = drops[i] * fontSize;
 
+                ctx.fillStyle = columnColors[i];
                 ctx.fillText(char, x, y);
 
-                // Reset drop to top with random delay
+                // Reset drop to top with random delay and new color
                 if (y > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
+                    columnColors[i] = colors[Math.floor(Math.random() * colors.length)];
                 }
 
                 // Variable speed
