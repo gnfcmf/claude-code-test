@@ -38,38 +38,18 @@
             max-width: 700px;
             height: 80vh;
             max-height: 600px;
-            background: #000;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #00aaff;
             border-radius: 5px;
             display: flex;
             flex-direction: column;
             z-index: 10;
-            padding: 2px;
-            background: linear-gradient(45deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff, #ff8800);
-            background-size: 400% 400%;
-            animation: borderGlow 3s linear infinite;
-            box-shadow: 0 0 30px rgba(255, 136, 0, 0.4),
-                        0 0 30px rgba(0, 170, 255, 0.4),
-                        0 0 30px rgba(0, 255, 136, 0.4);
-        }
-
-        .chat-inner {
-            background: #000;
-            border-radius: 4px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-        }
-
-        @keyframes borderGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.3),
+                        inset 0 0 20px rgba(0, 170, 255, 0.1);
         }
 
         /* CRT Scanline Overlay */
-        .chat-inner::before {
+        .chat-container::before {
             content: '';
             position: absolute;
             top: 0;
@@ -85,20 +65,16 @@
             );
             pointer-events: none;
             z-index: 100;
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
         /* Header */
         .chat-header {
             padding: 15px 20px;
-            border-bottom: 2px solid transparent;
-            border-image: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff) 1;
-            background: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            border-bottom: 1px solid #00aaff;
+            color: #00aaff;
+            text-shadow: 0 0 10px #00aaff;
             font-size: 14px;
-            filter: drop-shadow(0 0 10px rgba(255, 136, 0, 0.5));
         }
 
         .chat-header span {
@@ -120,22 +96,23 @@
         }
 
         .messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 170, 255, 0.1);
         }
 
         .messages::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
+            background: #00aaff;
             border-radius: 4px;
         }
 
         .message {
+            color: #00aaff;
+            text-shadow: 0 0 5px #00aaff;
             line-height: 1.5;
             font-size: 14px;
         }
 
         .message.user {
-            color: #00ff88;
-            text-shadow: 0 0 5px #00ff88;
+            color: #00aaff;
         }
 
         .message.user::before {
@@ -144,10 +121,9 @@
         }
 
         .message.bot {
-            color: #00aaff;
-            text-shadow: 0 0 5px #00aaff;
+            color: #0088cc;
             padding-left: 20px;
-            border-left: 2px solid #aa00ff;
+            border-left: 2px solid rgba(0, 170, 255, 0.3);
         }
 
         .message.bot::before {
@@ -165,11 +141,10 @@
             display: inline-block;
             width: 8px;
             height: 14px;
-            background: linear-gradient(180deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
-            animation: blink 0.7s infinite, colorShift 2s linear infinite;
+            background: #00aaff;
+            animation: blink 0.7s infinite;
             vertical-align: middle;
             margin-left: 2px;
-            background-size: 100% 500%;
         }
 
         @keyframes blink {
@@ -177,24 +152,18 @@
             51%, 100% { opacity: 0; }
         }
 
-        @keyframes colorShift {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 0% 100%; }
-        }
-
         /* Input Area */
         .input-area {
             padding: 15px 20px;
-            border-top: 2px solid transparent;
-            border-image: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff) 1;
+            border-top: 1px solid #00aaff;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .input-prompt {
-            color: #ff3333;
-            text-shadow: 0 0 10px #ff3333;
+            color: #00aaff;
+            text-shadow: 0 0 10px #00aaff;
             font-size: 16px;
         }
 
@@ -203,26 +172,23 @@
             background: transparent;
             border: none;
             outline: none;
-            color: #00ff88;
+            color: #00aaff;
             font-family: 'Courier New', monospace;
             font-size: 14px;
-            text-shadow: 0 0 5px #00ff88;
-            caret-color: #00ff88;
+            text-shadow: 0 0 5px #00aaff;
+            caret-color: #00aaff;
         }
 
         .input-field::placeholder {
-            color: rgba(0, 255, 136, 0.3);
+            color: rgba(0, 170, 255, 0.3);
         }
 
         /* Welcome Message */
         .welcome {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(90deg, #ff8800, #00aaff, #00ff88, #ff3333, #aa00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 10px rgba(170, 0, 255, 0.5));
+            color: #00aaff;
+            text-shadow: 0 0 10px #00aaff;
         }
 
         .welcome h2 {
@@ -240,22 +206,20 @@
     <canvas id="matrix-canvas"></canvas>
 
     <div class="chat-container">
-        <div class="chat-inner">
-            <div class="chat-header">
-                <span>MATRIX TERMINAL v1.0</span> | <span>STATUS: CONNECTED</span>
-            </div>
+        <div class="chat-header">
+            <span>MATRIX TERMINAL v1.0</span> | <span>STATUS: CONNECTED</span>
+        </div>
 
-            <div class="messages" id="messages">
-                <div class="welcome">
-                    <h2>WELCOME TO THE MATRIX</h2>
-                    <p>Type your message and press Enter to communicate</p>
-                </div>
+        <div class="messages" id="messages">
+            <div class="welcome">
+                <h2>WELCOME TO THE MATRIX</h2>
+                <p>Type your message and press Enter to communicate</p>
             </div>
+        </div>
 
-            <div class="input-area">
-                <span class="input-prompt">&gt;</span>
-                <input type="text" class="input-field" id="input-field" placeholder="Enter message..." autocomplete="off">
-            </div>
+        <div class="input-area">
+            <span class="input-prompt">&gt;</span>
+            <input type="text" class="input-field" id="input-field" placeholder="Enter message..." autocomplete="off">
         </div>
     </div>
 
@@ -287,13 +251,10 @@
         const fontSize = 14;
         const columns = Math.floor(canvas.width / fontSize);
         const drops = [];
-        const colors = ['#ff8800', '#00aaff', '#00ff88', '#ff3333', '#aa00ff'];
-        const columnColors = [];
 
-        // Initialize drops and colors
+        // Initialize drops
         for (let i = 0; i < columns; i++) {
             drops[i] = Math.random() * -100;
-            columnColors[i] = colors[Math.floor(Math.random() * colors.length)];
         }
 
         function drawMatrix() {
@@ -301,6 +262,7 @@
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            ctx.fillStyle = '#00aaff';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
@@ -308,13 +270,11 @@
                 const x = i * fontSize;
                 const y = drops[i] * fontSize;
 
-                ctx.fillStyle = columnColors[i];
                 ctx.fillText(char, x, y);
 
-                // Reset drop to top with random delay and new color
+                // Reset drop to top with random delay
                 if (y > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
-                    columnColors[i] = colors[Math.floor(Math.random() * colors.length)];
                 }
 
                 // Variable speed
