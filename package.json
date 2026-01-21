@@ -1,0 +1,11 @@
+{
+  "name": "matrix-chatbot",
+  "version": "1.0.0",
+  "description": "Matrix-themed chatbot with CRT effects and n8n webhook backend",
+  "scripts": {
+    "create-docs": "node create-notion-docs.js"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
+  }
+}
